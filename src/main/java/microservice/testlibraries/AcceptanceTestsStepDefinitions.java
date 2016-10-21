@@ -59,9 +59,11 @@ public class AcceptanceTestsStepDefinitions {
     public void customerIsAdded(String customer) {
         printMethodName();
 
-        msMainPage.navigateToCustomerPage()
-                .addCustomer(customer)
-                .navigateBackToMainPage();
+        throw new RuntimeException("BOO");
+
+//        msMainPage.navigateToCustomerPage()
+//                .addCustomer(customer)
+//                .navigateBackToMainPage();
     }
 
     @When("I order product (.*) as customer (.*)")

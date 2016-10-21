@@ -3,6 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+
 	<groupId>microservice-test-java</groupId>
 	<artifactId>microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -12,14 +13,16 @@
 	<description>microservice java tests</description>
 
   <properties>
-
+      <!-- Needed for allure-maven-plugin to specify report version -->
+      <allure.version>1.4.11</allure.version>
+      <aspectj.version>1.8.5</aspectj.version>
    </properties>
 
  <dependencies>
 	 <dependency>
 		 <groupId>com.codeborne</groupId>
 		 <artifactId>selenide</artifactId>
-		 <version>3.9.3</version>
+		 <version>4.0</version>
 	 </dependency>
 	 <dependency>
 		 <groupId>junit</groupId>
@@ -56,11 +59,11 @@
 		 <artifactId>config</artifactId>
 		 <version>1.2.0</version>
 	 </dependency>
-	 <dependency>
-		 <groupId>org.testng</groupId>
-		 <artifactId>testng</artifactId>
-		 <version>6.8.13</version>
-	 </dependency>
+	 <!--<dependency>-->
+		 <!--<groupId>org.testng</groupId>-->
+		 <!--<artifactId>testng</artifactId>-->
+		 <!--<version>6.8.13</version>-->
+	 <!--</dependency>-->
 	 <dependency>
 		 <groupId>info.cukes</groupId>
 		 <artifactId>cucumber-java</artifactId>
@@ -69,8 +72,21 @@
 	 <dependency>
 		 <groupId>info.cukes</groupId>
 		 <artifactId>cucumber-junit</artifactId>
-		 <version>1.2.4</version>
+		 <version>1.2.5</version>
 	 </dependency>
+     <dependency>
+         <groupId>ru.yandex.qatools.allure</groupId>
+         <artifactId>allure-cucumber-jvm-adaptor</artifactId>
+         <version>1.5.1</version>
+     </dependency>
+     <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-core -->
+     <dependency>
+         <groupId>info.cukes</groupId>
+         <artifactId>cucumber-core</artifactId>
+         <version>1.2.5</version>
+     </dependency>
+
+
  </dependencies>
     <build>
         <plugins>
@@ -115,15 +131,52 @@
                 </executions>
             </plugin>
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.19.1</version>
-            <configuration>
-                <skipTests>false</skipTests>
-            </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <testFailureIgnore>false</testFailureIgnore>
+                    <argLine>
+                        -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+                    </argLine>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>ru.yandex.qatools.allure.cucumberjvm.AllureRunListener</value>
+                        </property>
+                    </properties>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
+
+
+            <!--Needed only to show reports locally. Run jetty:run and
+            open localhost:8080 to show the report-->
             <plugin>
-                <artifactId/>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.10.v20150310</version>
+                <configuration>
+                    <webAppSourceDirectory>${project.build.directory}/site/allure-maven-plugin</webAppSourceDirectory>
+                    <stopKey>stop</stopKey>
+                    <stopPort>1234</stopPort>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
 
         </plugins>
@@ -131,5 +184,16 @@
   
   <profiles>
   </profiles>
+
+    <reporting>
+        <excludeDefaults>true</excludeDefaults>
+        <plugins>
+            <plugin>
+                <groupId>ru.yandex.qatools.allure</groupId>
+                <artifactId>allure-maven-plugin</artifactId>
+                <version>2.0</version>
+            </plugin>
+        </plugins>
+    </reporting>
 
 </project>
