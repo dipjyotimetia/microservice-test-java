@@ -3,14 +3,11 @@ package microservice.pages;
 
 import com.codeborne.selenide.Condition;
 import microservice.common.MsCommon;
-import microservice.common.MsConstants;
 import microservice.helper.SeleniumHelper;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.page;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static microservice.common.MsConstants.buttonPressTimeoutMs;
 import static microservice.helper.SeleniumHelper.printMethodName;
 
 public class MsOrderPage {

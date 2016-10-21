@@ -3,7 +3,6 @@ package microservice.common;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import microservice.helper.SeleniumHelper;
-import microservice.pages.MsMainPage;
 import org.joda.time.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,9 +19,6 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static microservice.common.MsConstants.*;
 import static microservice.helper.SeleniumHelper.printMethodName;
 
-/**
- * Created by jariheikkila on 20/09/16.
- */
 public class MsCommon {
 
     public static void setUp() throws Exception {
@@ -43,14 +39,13 @@ public class MsCommon {
         //Configuration.browser="firefox";
         Configuration.browser="chrome";
 
-
     }
 
     public static void waitForElementClick(String clickLocator, String verifyLocator)  {
         printMethodName();
 
         try {
-            waitForElementClick(buttonPressTimeoutMs, buttonPressRetryIntervalMs, buttonPressXpathWaitTimeoutMs, buttonPressAngularWaitTimeoutMs, -150, false, clickLocator, verifyLocator, doRefreshOnFailure);
+            waitForElementClick(elementClickTimeoutMs, elementClickRetryIntervalMs, elementClickXpathWaitTimeoutMs, elementClickAngularWaitTimeoutMs, -150, false, clickLocator, verifyLocator, doRefreshOnFailure);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +55,7 @@ public class MsCommon {
         printMethodName();
 
         try {
-            waitForElementClick(buttonPressTimeoutMs, buttonPressRetryIntervalMs, buttonPressXpathWaitTimeoutMs, buttonPressAngularWaitTimeoutMs, -150, isAngular, clickLocator, verifyLocator,doRefreshOnFailure);
+            waitForElementClick(elementClickTimeoutMs, elementClickRetryIntervalMs, elementClickXpathWaitTimeoutMs, elementClickAngularWaitTimeoutMs, -150, isAngular, clickLocator, verifyLocator,doRefreshOnFailure);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
@@ -185,7 +180,7 @@ public class MsCommon {
 
     public static void waitforAngularJS() {
 
-        waitforAngularJS(buttonPressAngularWaitTimeoutMs);
+        waitforAngularJS(elementClickAngularWaitTimeoutMs);
     }
 
     public static void waitforAngularJS(int timeoutInMs) {

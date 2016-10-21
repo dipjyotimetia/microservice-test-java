@@ -21,10 +21,10 @@ public class MsConstants {
     //public static final String seleniumGridWinHubAddress = config.getString("seleniumGridWinHubAddress");
 
     //FOR COMMON METHODs waitForElementClick and waitForButtonClickAngular
-    public static int buttonPressTimeoutMs = config.getInt("buttonpress_timeout_ms");
-    public static int buttonPressRetryIntervalMs = config.getInt("buttonpress_retryinterval_ms");
-    public static int buttonPressXpathWaitTimeoutMs = config.getInt("buttonpress_xpath_wait_timeout_ms");
-    public static int buttonPressAngularWaitTimeoutMs = config.getInt("buttonpress_angular_wait_timeout_ms");
+    public static int elementClickTimeoutMs = config.getInt("element_click_timeout_ms");
+    public static int elementClickRetryIntervalMs = config.getInt("element_click_retryinterval_ms");
+    public static int elementClickXpathWaitTimeoutMs = config.getInt("element_click_xpath_wait_timeout_ms");
+    public static int elementClickAngularWaitTimeoutMs = config.getInt("element_click_angular_wait_timeout_ms");
     public static boolean doRefreshOnFailure = config.getBoolean("do_refresh_on_failure");
 
 
