@@ -13,6 +13,7 @@ public class MsConstants {
     //private static final Config config = ConfigFactory.load("general.properties");
 
     public static final long commonSelenideTimeout = MsConstants.config.getLong("common_selenide_timeout_ms");
+    public static final long doNotHurryTooMuchDelayMs = MsConstants.config.getLong("do_not_hurry_too_much_delay_ms");
 
     public static boolean selenideClickElementByJavascript = config.getBoolean("selenide_click_element_by_javascript");
 

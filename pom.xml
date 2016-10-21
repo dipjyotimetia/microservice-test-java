@@ -71,20 +71,7 @@
 		 <artifactId>cucumber-junit</artifactId>
 		 <version>1.2.4</version>
 	 </dependency>
-     <!-- REPORTING -->
-     <dependency>
-         <groupId>com.googlecode.totallylazy</groupId>
-         <artifactId>totallylazy</artifactId>
-         <version>2.256</version>
-         <scope>system</scope>
-         <systemPath>${project.basedir}/src/test/resources/libraries/totallylazy-2.256.jar</systemPath>
-     </dependency>
-     <dependency>
-         <groupId>net.masterthought</groupId>
-         <artifactId>cucumber-reporting</artifactId>
-         <version>3.0.0</version>
-     </dependency>
-  </dependencies>
+ </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -136,34 +123,7 @@
             </configuration>
             </plugin>
             <plugin>
-                <groupId>net.masterthought</groupId>
-                <artifactId>maven-cucumber-reporting</artifactId>
-                <version>3.0.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.googlecode.totallylazy</groupId>
-                        <artifactId>totallylazy</artifactId>
-                        <version>2.256</version>
-                        <scope>system</scope>
-                        <systemPath>${project.basedir}/src/test/resources/libraries/totallylazy-2.256.jar</systemPath>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <id>execution</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <projectName>cucumber-jvm-example</projectName>
-                            <outputDirectory>${project.build.directory}/site/cucumber-reports</outputDirectory>
-                            <cucumberOutput>${project.build.directory}/Destination/cucumber.json</cucumberOutput>
-                            <!--<enableFlashCharts>false</enableFlashCharts>-->
-                            <!--<skippedFails>true</skippedFails>-->
-                        </configuration>
-                    </execution>
-                </executions>
+                <artifactId/>
             </plugin>
 
         </plugins>
