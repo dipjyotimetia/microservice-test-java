@@ -170,8 +170,8 @@
         </plugins>
     </build>
   
-  <profiles>
-  </profiles>
+    <profiles>
+    </profiles>
 
     <reporting>
         <excludeDefaults>true</excludeDefaults>

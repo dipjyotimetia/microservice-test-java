@@ -18,7 +18,7 @@ public class MsConstants {
     public static boolean selenideClickElementByJavascript = config.getBoolean("selenide_click_element_by_javascript");
 
     //SELENIUM GRID
-    //public static final String seleniumGridWinHubAddress = config.getString("seleniumGridWinHubAddress");
+    public static final String seleniumGridWinHubAddress = config.getString("seleniumGridWinHubAddress");
 
     //FOR COMMON METHODs waitForElementClick and waitForButtonClickAngular
     public static int elementClickTimeoutMs = config.getInt("element_click_timeout_ms");
