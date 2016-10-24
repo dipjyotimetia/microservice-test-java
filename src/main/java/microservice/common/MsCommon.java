@@ -86,6 +86,7 @@ public class MsCommon {
         DateTime timeoutTime = new DateTime().plusMillis(timeoutMs);
         while (timeoutTime.isAfterNow()) {
             try {
+
                 final By seleniumBy = verifyLocator.startsWith("//") ? By.xpath(verifyLocator) : By.cssSelector(verifyLocator);
                 if (!$(seleniumBy).isDisplayed() || verifyLocatorIsEmpty) { //verifyLocatorIsEmpty overrides the check if already in target page
                     Configuration.timeout = locatorWaitTimeoutMs; //Override the default selenide timeout - for while retry

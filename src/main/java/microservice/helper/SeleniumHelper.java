@@ -43,7 +43,7 @@ public class SeleniumHelper {
 
         final By seleniumBy = locator.startsWith("//") ? By.xpath(locator) : By.cssSelector(locator);
 
-        $(seleniumBy).waitUntil(visible, 10000);
+        $(seleniumBy).waitUntil(visible, 5000);
         $(seleniumBy).scrollTo();
         jse.executeScript("window.scrollBy(" + x + "," + y + ")", "");
     }

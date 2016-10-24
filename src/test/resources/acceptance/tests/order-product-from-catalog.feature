@@ -1,3 +1,4 @@
+@order @all
 Feature: Microservice acceptance tests
 
   Scenario: Order a product from a catalog
@@ -8,4 +9,3 @@ Feature: Microservice acceptance tests
      And customer Teemu Selanne is added
     When I order product Torspo as customer Teemu Selanne
     Then I can verify my order of Torspo with price 119.0 by customer Teemu Selanne
-

@@ -1,6 +1,7 @@
 package microservice.testlibraries;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -35,7 +36,7 @@ public class CatalogStepDefinitions {
 
     }
 
-    @Then("catalog item price should be (.*)")
+    @And("catalog item price should be (.*)")
     public void catalogItemPriceShouldBe(String catalogItemPrice) {
 
         assertThat((catalogItem.get("price").asText()), is(catalogItemPrice));

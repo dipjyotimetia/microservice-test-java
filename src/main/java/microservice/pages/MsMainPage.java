@@ -48,7 +48,7 @@ public class MsMainPage {
         printMethodName();
 
         int buttonPressTimeoutOld = MsConstants.elementClickTimeoutMs;
-        elementClickTimeoutMs = 240000;
+        //elementClickTimeoutMs = 240000;
         MsConstants.doRefreshOnFailure = true;
 
         MsCommon.waitForElementClick("//a[contains(text(),'Order')]",MsOrderPage.addOrderXpath);
