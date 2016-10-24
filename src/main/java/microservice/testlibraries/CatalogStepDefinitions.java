@@ -5,7 +5,10 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import microservice.helper.SSHService;
 import microservice.msrest.MsCatalogRest;
+
+import java.io.File;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -17,6 +20,15 @@ public class CatalogStepDefinitions {
 
     @Given("^catalog item exists at the database$")
     public void catalogItemExistsAtTheDatabase() {
+
+        //SSHService ssh = new SSHService("192.168.50.4", "vagrant", "vagrant",new File(""),"");
+        SSHService ssh = new SSHService("192.168.50.4", "vagrant", "",new File("/Users/jariheikkila/.ssh/id_rsa"),"");
+
+        try {
+            System.out.println("RESPONSE: " + ssh.executeCommand("ifconfig","sshkey"));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 

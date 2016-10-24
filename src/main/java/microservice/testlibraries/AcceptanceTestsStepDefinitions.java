@@ -1,5 +1,6 @@
 package microservice.testlibraries;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -23,6 +24,8 @@ public class AcceptanceTestsStepDefinitions {
     @Given("^order by (.*) should not exist$")
     public void orderShouldNotExistByCustomer(String customer) {
         printMethodName();
+
+        //Configuration.browserSize = "800x400";
 
         msMainPage = Selenide.open(MsConstants.microserviceHost, MsMainPage.class);
         msMainPage.navigateToOrderPage()
