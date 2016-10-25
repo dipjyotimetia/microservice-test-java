@@ -17,7 +17,14 @@ public class SSHService {
     private final File keyfile;
     private final String keyPassphrase;
 
-    /* */
+    /* USAGE: Two options for authentication:
+     * Password based authentication:
+     * SSHService ssh = new SSHService("192.168.50.4", "vagrant", "vagrant",new File(""),"");
+     *
+     * SSH key based authentication:
+     * SSHService ssh = new SSHService("192.168.50.4", "vagrant", "",new File("/Users/jariheikkila/.ssh/id_rsa"),"");
+     */
+
     public SSHService(String hostname, String username, String password, File keyfile, String keyPassphrase) {
         this.hostname = hostname;
         this.username = username;
@@ -27,22 +34,14 @@ public class SSHService {
 
     }
 
-    public String executeCommand(String command, String authenticationMethod) throws InterruptedException {
+    public String executeCommand(String authenticationMethod, String command) {
         printMethodName();
 
-        Connection connection;
-
-        if (authenticationMethod.equals("sshkey")) {
-             connection = createConnectionAndLogInWithSSHKeys();
-        } else if (authenticationMethod.equals("password")) {
-            connection = createConnectionAndLogIn();
-        } else {
-            throw new RuntimeException("Authentication method not given.");
-        }
+        Connection connection = getConnectionBasedOnAuthenticationMethod(authenticationMethod);
 
         String lines = new String();
-        try{
 
+        try{
             Session session = connection.openSession();
             session.execCommand(command);
             InputStream stdout = new StreamGobbler(session.getStdout());
@@ -54,6 +53,7 @@ public class SSHService {
                 lines = lines +line;
             }
             session.close();
+            System.out.println("Successfully executed command: "+ command + " to host " +hostname);
 
         }
         catch (IOException e){
@@ -66,18 +66,10 @@ public class SSHService {
     }
 
 
-    public String writeToShell(String command, String authenticationMethod) {
+    public String writeToShell(String authenticationMethod, String command) {
         printMethodName();
 
-        Connection connection;
-
-        if (authenticationMethod.equals("sshkey")) {
-            connection = createConnectionAndLogInWithSSHKeys();
-        } else if (authenticationMethod.equals("password")) {
-            connection = createConnectionAndLogIn();
-        } else {
-            throw new RuntimeException("Authentication method not given.");
-        }
+        Connection connection = getConnectionBasedOnAuthenticationMethod(authenticationMethod);
 
         String lines = new String();
         try{
@@ -112,21 +104,12 @@ public class SSHService {
 
 
     /*Download file from server, example:
-    SSHServiceOld sshService = new SSHServiceOld("<host/ip>","<user>", "<passwd>");
-    sshService.downloadFile("/home/omaeladm/xstartup","/Users/jaheikki");
+    sshService.downloadFile("passwordAuth","/home/omaeladm/xstartup","/Users/jaheikki");
     Suggesting still to use downloadFiles method*/
     public void downloadFile(String authenticationMethod, String remoteFile,String localFolder) {
         printMethodName();
 
-        Connection connection;
-
-        if (authenticationMethod.equals("sshkey")) {
-            connection = createConnectionAndLogInWithSSHKeys();
-        } else if (authenticationMethod.equals("password")) {
-            connection = createConnectionAndLogIn();
-        } else {
-            throw new RuntimeException("Authentication method not given.");
-        }
+        Connection connection = getConnectionBasedOnAuthenticationMethod(authenticationMethod);
 
         SCPClient client=new SCPClient(connection);
         try {
@@ -134,30 +117,23 @@ public class SSHService {
         } catch (IOException e) {
             throw new RuntimeException("Failed to download file: " + remoteFile + " to " + localFolder + " from " + connection.getHostname(), e);
         } finally {
+            System.out.println("Successfully downloaded file: "+ remoteFile + " to folder " + localFolder);
             connection.close();
         }
     }
 
     /**Download file or files, with default permision: 0600, examples
     *String localFolder = "/Users/jaheikki";
-    *downloadFiles(localFolder, "test1.txt");
-    *downloadFiles(localFolder, "test1.txt", "test2.txt");
-    *downloadFiles(localFolder, "test1.txt", "test2.txt", "test3.txt");
+    *downloadFiles("passwordAuth",localFolder, "test1.txt");
+    *downloadFiles("passwordAuth",localFolder, "test1.txt", "test2.txt");
+    *downloadFiles("passwordAuth",localFolder, "test1.txt", "test2.txt", "test3.txt");
     *String[] files = new String[] {"test1.txt", "test2.txt", "test3.txt"};
-    downloadFiles(localFolder, files);
+    downloadFiles("passwordAuth",localFolder, files);
     * Note: "..." notation creates array automatically*/
-    public void downloadFiles( String authenticationMethod, String localFolder,String... remoteFiles) {
+    public void downloadFiles(String authenticationMethod, String localFolder,String... remoteFiles) {
         printMethodName();
 
-        Connection connection;
-
-        if (authenticationMethod.equals("sshkey")) {
-            connection = createConnectionAndLogInWithSSHKeys();
-        } else if (authenticationMethod.equals("password")) {
-            connection = createConnectionAndLogIn();
-        } else {
-            throw new RuntimeException("Authentication method not given.");
-        }
+        Connection connection = getConnectionBasedOnAuthenticationMethod(authenticationMethod);
 
         SCPClient client=new SCPClient(connection);
         try {
@@ -167,6 +143,7 @@ public class SSHService {
             Arrays.asList(remoteFiles).stream().forEach(s -> System.out.println(s));
             throw new RuntimeException("Failed to download files to " + localFolder + " from " + connection.getHostname(), e);
         } finally {
+            System.out.println("Successfully downloaded files: "+ remoteFiles + " to folder " + localFolder);
             connection.close();
         }
         System.out.println("Successfully downloaded following files to "+ localFolder + " from " + connection.getHostname());
@@ -174,23 +151,16 @@ public class SSHService {
 
     }
 
-    /*Upload single file to server allowing to rename transferred files. Otherwise proposing to use uploadFiles methods*/
-    public void uploadFile(String localFile,String remoteFile,String remoteFolder,String mode, String authenticationMethod) {
+    /*Upload single file to server allowing to rename transferred files. Otherwise proposing to use uploadFilesWithDefaultPermission methods*/
+    public void uploadFile(String authenticationMethod, String localFile,String remoteFile,String remoteFolder,String permission) {
         printMethodName();
 
-        Connection connection;
-
-        if (authenticationMethod.equals("sshkey")) {
-            connection = createConnectionAndLogInWithSSHKeys();
-        } else if (authenticationMethod.equals("password")) {
-            connection = createConnectionAndLogIn();
-        } else {
-            throw new RuntimeException("Authentication method not given.");
-        }
+        Connection connection = getConnectionBasedOnAuthenticationMethod(authenticationMethod);
 
         SCPClient client=new SCPClient(connection);
         try {
-            client.put(localFile,remoteFile,remoteFolder,mode);
+            client.put(localFile,remoteFile,remoteFolder,permission);
+            System.out.println("Successfully uploaded file: "+ localFile + " to folder " + remoteFolder + " as "+remoteFile);
         } catch (IOException e) {
             throw new RuntimeException("Failed to upload file: " + localFile + " to " + remoteFolder + " to " + connection.getHostname(), e);
         } finally {
@@ -199,61 +169,46 @@ public class SSHService {
     }
 
     /**Upload file or files, with default permision: 0600, examples
-    *uploadFiles(remoteFolder, "test1.txt");
-    *uploadFiles(remoteFolder, "test1.txt", "test2.txt");
-    *uploadFiles(remoteFolder, "test1.txt", "test2.txt", "test3.txt");
+    *uploadFilesWithDefaultPermission("sshKeyAuth",remoteFolder, "test1.txt");
+    *uploadFilesWithDefaultPermission("sshKeyAuth",remoteFolder, "test1.txt", "test2.txt");
+    *uploadFilesWithDefaultPermission("sshKeyAuth",remoteFolder, "test1.txt", "test2.txt", "test3.txt");
     *String[] files = new String[] {"test1.txt", "test2.txt", "test3.txt"};
-    *uploadFiles(remoteFolder, files);
+    *uploadFilesWithDefaultPermission("sshKeyAuth",remoteFolder, files);
     * Note: "..." notation creates array automatically*/
-    public void uploadFiles( String authenticationMethod, String remoteFolder, String... localFiles) {
+    public void uploadFilesWithDefaultPermission(String authenticationMethod, String remoteFolder, String... localFiles) {
         printMethodName();
 
-        Connection connection;
-
-        if (authenticationMethod.equals("sshkey")) {
-            connection = createConnectionAndLogInWithSSHKeys();
-        } else if (authenticationMethod.equals("password")) {
-            connection = createConnectionAndLogIn();
-        } else {
-            throw new RuntimeException("Authentication method not given.");
-        }
+        Connection connection = getConnectionBasedOnAuthenticationMethod(authenticationMethod);
 
         SCPClient client=new SCPClient(connection);
         try {
             client.put(localFiles,remoteFolder);
         } catch (IOException e) {
             System.out.println("Tried to upload following files:");
-            Arrays.asList(localFiles).stream().forEach(s -> System.out.println(s));
+            Arrays.asList(localFiles).forEach(s -> System.out.println(s));
             throw new RuntimeException("Failed to upload files to " + remoteFolder + " to " + connection.getHostname(), e);
         } finally {
             connection.close();
         }
         System.out.println("Successfully uploaded following files to "+ remoteFolder + " to " + connection.getHostname());
-        Arrays.asList(localFiles).stream().forEach(s -> System.out.println(s));
+        Arrays.asList(localFiles).forEach(s -> System.out.println(s));
     }
-    /**Upload file or files, with custom permision (mode), examples
+
+    /**Upload file or files, with custom permision, examples
     *String remoteFolder = "/foo/bar";
-    *uploadFiles(remoteFolder, "0755" ,"test1.txt");
-    *uploadFiles(remoteFolder, "0755", "test1.txt", "test2.txt");
-    *uploadFiles(remoteFolder, "0755", "test1.txt", "test2.txt", "test3.txt");
+    *uploadFilesWithDefaultPermission("sshKeyAuth",remoteFolder, "0755" ,"test1.txt");
+    *uploadFilesWithDefaultPermission("sshLKeyAuth",remoteFolder, "0755", "test1.txt", "test2.txt");
+    *uploadFilesWithDefaultPermission("sshKeyAuth",remoteFolder, "0755", "test1.txt", "test2.txt", "test3.txt");
     *String[] files = new String[] {"test1.txt", "test2.txt", "test3.txt"};
-    *uploadFiles(remoteFolder, "0755", files);*/
-    public void uploadFilesWithPermission(String authenticationMethod, String remoteFolder,String mode, String... localFiles) {
+    *uploadFilesWithDefaultPermission("sshKeyAuth",remoteFolder, "0755", files);*/
+    public void uploadFiles(String authenticationMethod, String remoteFolder, String permission, String... localFiles) {
         printMethodName();
 
-        Connection connection;
-
-        if (authenticationMethod.equals("sshkey")) {
-            connection = createConnectionAndLogInWithSSHKeys();
-        } else if (authenticationMethod.equals("password")) {
-            connection = createConnectionAndLogIn();
-        } else {
-            throw new RuntimeException("Authentication method not given.");
-        }
+        Connection connection = getConnectionBasedOnAuthenticationMethod(authenticationMethod);
 
         SCPClient client=new SCPClient(connection);
         try {
-            client.put(localFiles,remoteFolder,mode);
+            client.put(localFiles,remoteFolder,permission);
         } catch (IOException e) {
             System.out.println("Tried to upload following files:");
             Arrays.asList(localFiles).stream().forEach(s -> System.out.println(s));
@@ -272,7 +227,7 @@ public class SSHService {
         try {
             connection.connect();
             boolean isAuthenticated = connection.authenticateWithPassword(username,password);
-            if (isAuthenticated == false){
+            if (!isAuthenticated){
                 throw new IOException("Authentication failed");
             }
             return connection;
@@ -289,7 +244,7 @@ public class SSHService {
         try {
             connection.connect();
             boolean isAuthenticated = connection.authenticateWithPublicKey(username, keyfile, keyPassphrase);
-            if (isAuthenticated == false){
+            if (!isAuthenticated){
                 throw new IOException("Authentication failed");
             }
             return connection;
@@ -299,5 +254,20 @@ public class SSHService {
             System.exit(2);
         }
         throw new RuntimeException("Failed to create SSH key authenticated connection to:" + hostname);
+    }
+
+    private Connection getConnectionBasedOnAuthenticationMethod(String authenticationMethod) {
+        Connection connection;
+
+        switch (authenticationMethod) {
+            case "sshKeyAuth":
+                connection = createConnectionAndLogInWithSSHKeys();
+                return connection;
+            case "passwordAuth":
+                connection = createConnectionAndLogIn();
+                return connection;
+            default:
+                throw new IllegalArgumentException("Invalid authentication method: " + authenticationMethod);
+        }
     }
 }

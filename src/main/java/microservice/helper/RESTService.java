@@ -42,9 +42,7 @@ public class RESTService {
                 throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
             }
 
-            String jsonString= response.getEntity(String.class);
-
-            return jsonString;
+            return response.getEntity(String.class);
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to get from url: " + url, e);

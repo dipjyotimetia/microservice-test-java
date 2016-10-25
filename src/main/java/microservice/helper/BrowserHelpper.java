@@ -13,7 +13,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 public class BrowserHelpper implements Closeable {
 
     private WebDriver driver;
-    private String parentHandle;
+    private final String parentHandle;
     private String newHandle;
     private JavascriptExecutor jsExecutor;
 
@@ -21,7 +21,6 @@ public class BrowserHelpper implements Closeable {
 
     public  BrowserHelpper() {
         driver = getWebDriver();
-        this.driver = driver;
         parentHandle = driver.getWindowHandle(); // get the current (parent) window handle
         jsExecutor = (JavascriptExecutor) driver;
     }

@@ -57,9 +57,7 @@ public class MsCatalogRest {
 
             ObjectMapper objectMapper = new ObjectMapper();
 
-            JsonNode rootNode = objectMapper.readTree(jsonString);
-
-            return rootNode;
+            return objectMapper.readTree(jsonString);
 
         } catch (Exception e) {
             throw new RuntimeException("Failed to get catalog item with id " + service +"/"+uri+"/"+id, e);

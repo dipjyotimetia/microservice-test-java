@@ -19,13 +19,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class AcceptanceTestsStepDefinitions {
 
-    MsMainPage msMainPage;
+    private MsMainPage msMainPage;
 
     @Given("^order by (.*) should not exist$")
     public void orderShouldNotExistByCustomer(String customer) {
         printMethodName();
 
-        //Configuration.browserSize = "800x400";
+        //Configuration.browserSize = "400x600";
 
         msMainPage = Selenide.open(MsConstants.microserviceHost, MsMainPage.class);
         msMainPage.navigateToOrderPage()
