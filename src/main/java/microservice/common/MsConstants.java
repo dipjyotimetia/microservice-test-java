@@ -6,12 +6,11 @@ import com.typesafe.config.ConfigFactory;
 
 public class MsConstants {
 
-    public static final String env = System.getProperty("env", "localenv");
+    private static final String env = System.getProperty("env", "local");
     private static final String propertiesFile = env + ".properties";
     private static final Config config = ConfigFactory.load(propertiesFile).withFallback(ConfigFactory.load("general.properties"));
 
-    //private static final Config config = ConfigFactory.load("general.properties");
-
+    public static final String selenideScreenshotsFolder = MsConstants.config.getString("selenide_screenshots_folder");
     public static final long commonSelenideTimeout = MsConstants.config.getLong("common_selenide_timeout_ms");
     public static final long doNotHurryTooMuchDelayMs = MsConstants.config.getLong("do_not_hurry_too_much_delay_ms");
 

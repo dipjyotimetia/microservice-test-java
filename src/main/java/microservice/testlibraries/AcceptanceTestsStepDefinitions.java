@@ -1,5 +1,6 @@
 package microservice.testlibraries;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import cucumber.api.java.en.And;
@@ -10,6 +11,7 @@ import microservice.common.MsConstants;
 import microservice.pages.MsMainPage;
 import microservice.msrest.MsCatalogRest;
 import microservice.msrest.MsCustomerRest;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
 import static microservice.helper.SeleniumHelper.printMethodName;
@@ -70,6 +72,10 @@ public class AcceptanceTestsStepDefinitions {
     @When("I order product (.*) as customer (.*)")
     public void iOrderProduct(String catalogItem, String customer) {
         printMethodName();
+
+        //Remove this, just to get UI test to fail for a allure report and selenide screenshot
+        $(By.xpath("//h1[contains(text(),'Success')]")).shouldBe(Condition.visible);
+
 
         msMainPage.navigateToOrderPage()
                 .addOrderByCustomer(catalogItem, customer)

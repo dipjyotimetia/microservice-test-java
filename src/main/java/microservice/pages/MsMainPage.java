@@ -16,7 +16,7 @@ public class MsMainPage {
         printMethodName();
 
         int buttonPressTimeoutOld = MsConstants.elementClickTimeoutMs;
-        elementClickTimeoutMs = 240000;
+        elementClickTimeoutMs = 120000;
         MsConstants.doRefreshOnFailure = true;
 
         MsCommon.waitForElementClick("//div[contains(text(),'List / add / remove items')]/..//a[contains(text(),'Catalog')]",MsCatalogPage.addItemXpath);
@@ -32,7 +32,7 @@ public class MsMainPage {
         printMethodName();
 
         int buttonPressTimeoutOld = MsConstants.elementClickTimeoutMs;
-        elementClickTimeoutMs = 240000;
+        elementClickTimeoutMs = 120000;
         MsConstants.doRefreshOnFailure = true;
 
         MsCommon.waitForElementClick("//a[contains(text(),'Customer')]","//h1[contains(text(),'Customer : View all')]");
@@ -48,7 +48,7 @@ public class MsMainPage {
         printMethodName();
 
         int buttonPressTimeoutOld = MsConstants.elementClickTimeoutMs;
-        //elementClickTimeoutMs = 240000;
+        elementClickTimeoutMs = 120000;
         MsConstants.doRefreshOnFailure = true;
 
         MsCommon.waitForElementClick("//a[contains(text(),'Order')]",MsOrderPage.addOrderXpath);
