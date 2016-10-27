@@ -34,6 +34,7 @@ public class AcceptanceRunnerTest {
         //If true, Selenide uses Javascript to click element -> can be used as temporary workaround if bugs related clicking (especially in Chrome)
         Configuration.clickViaJs = MsConstants.selenideClickElementByJavascript;
 
+
     }
 
     @AfterClass

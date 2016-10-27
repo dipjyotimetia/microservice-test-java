@@ -5,7 +5,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class MsFirefoxDriverProviderCustomSize extends BrowserBase {
+public class FirefoxDriverProvider extends BrowserBase {
     @Override
     public WebDriver createDriver(DesiredCapabilities desiredCapabilities) {
         //return setCustomWindowSize(new FirefoxDriver(desiredCapabilities),0,0); //0,0 means start maximized
@@ -14,6 +14,6 @@ public class MsFirefoxDriverProviderCustomSize extends BrowserBase {
         profile.setAcceptUntrustedCertificates(true); // Accept Untrusted Certificates in firefox always with this class
         desiredCapabilities.setCapability("marionette", true);
         desiredCapabilities.setCapability(FirefoxDriver.PROFILE, profile);
-        return setCustomWindowSize(new FirefoxDriver(desiredCapabilities),1000,800); //1000,800 simulates run in Jenkins (slave)
+        return new FirefoxDriver(desiredCapabilities);
     }
 }

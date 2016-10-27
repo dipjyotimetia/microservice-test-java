@@ -11,14 +11,14 @@ SETUP HUB e.g.:
 java -jar selenium-server-standalone-2.44.0.jar -role hub
 
 SETUP NODE e.g.:
-java -jar selenium-server-standalone-2.44.0.jar -role node -browser browserName=ie,version=10.0,platform=WINDOWS -hub http://localhost:4444/grid/console -Dwebdriver.ie.driver=c:\temp\IEDriverServer.exe
+java -jar selenium-server-standalone-2.44.0.jar -role node -browser browserName=ie,version=11.0,platform=WINDOWS -hub http://localhost:4444/grid/console -Dwebdriver.ie.driver=c:\temp\IEDriverServer.exe
 
 */
-public class MsIe10Win7RemoteDriverProvider extends BrowserBase{
+public class IE11Win7RemoteDriverProvider extends BrowserBase{
 
     @Override
     public WebDriver createDriver(DesiredCapabilities desiredCapabilities) {
-       return createSeleniumGridRemoteDriver("ie", "10.0", Platform.WINDOWS, MsConstants.seleniumGridWinHubAddress);
+       return createSeleniumGridRemoteDriver("ie", "11.0", Platform.WINDOWS, MsConstants.seleniumGridHubAddress);
     }
 }
 

@@ -6,7 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-public class MsChromeDriverProviderCustomSize extends BrowserBase {
+public class ChromeDriverProviderCustomSize extends BrowserBase {
     @Override
     public WebDriver createDriver(DesiredCapabilities desiredCapabilities) {
 

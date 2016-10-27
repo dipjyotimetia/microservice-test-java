@@ -26,6 +26,24 @@ public abstract class BrowserBase implements WebDriverProvider{
 
     }
 
+    public static WebDriver createMobileChromeRemoteDriver(final String deviceName,String hubUrl,DesiredCapabilities desiredCapabilities) {
+        Map<String, String> mobileEmulation = new HashMap<String, String>();
+        mobileEmulation.put("deviceName", deviceName);
+        Map<String, Object> chromeOptions = new HashMap<String, Object>();
+        chromeOptions.put("mobileEmulation", mobileEmulation);
+        desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+        desiredCapabilities.setCapability("browserName","chrome");
+        desiredCapabilities.setCapability("version","");
+        desiredCapabilities.setCapability("platform","ANY");
+
+        try {
+            return new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public static WebDriver createSeleniumGridRemoteDriver(String browser, String browserVersion, Platform platform, String hubUrl)
     {
         DesiredCapabilities capability = new DesiredCapabilities(browser, browserVersion, platform);
@@ -40,7 +58,6 @@ public abstract class BrowserBase implements WebDriverProvider{
     public static WebDriver setCustomWindowSize(WebDriver webDriver, int windowWidth, int windowHeight) {
 
         if (windowWidth == 0 || windowHeight == 0) {
-            Configuration.startMaximized = false;
 
 //            java.awt.Point targetPosition = new java.awt.Point(0, 0);
 //            webDriver.manage().window().setPosition(targetPosition);
@@ -53,7 +70,6 @@ public abstract class BrowserBase implements WebDriverProvider{
 //            webDriver.manage().window().setSize(targetSize);
 
         } else {
-            Configuration.startMaximized = false;
 
             webDriver.manage().window().setPosition(new Point(0,0));
             webDriver.manage().window().setSize(new Dimension(windowWidth,windowHeight));
