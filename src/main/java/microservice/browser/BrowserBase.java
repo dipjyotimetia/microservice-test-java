@@ -6,6 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -22,6 +23,7 @@ public abstract class BrowserBase implements WebDriverProvider{
         Map<String, Object> chromeOptions = new HashMap<String, Object>();
         chromeOptions.put("mobileEmulation", mobileEmulation);
         desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+        desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
         return new ChromeDriver(desiredCapabilities);
 
     }
@@ -35,6 +37,7 @@ public abstract class BrowserBase implements WebDriverProvider{
         desiredCapabilities.setCapability("browserName","chrome");
         desiredCapabilities.setCapability("version","");
         desiredCapabilities.setCapability("platform","ANY");
+        desiredCapabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
 
         try {
             return new RemoteWebDriver(new URL(hubUrl), desiredCapabilities);

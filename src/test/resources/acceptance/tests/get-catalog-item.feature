@@ -5,5 +5,5 @@ Feature: Catalog integration tests
     Given catalog item exists at the database
     When i get the catalog item from rest http://localhost:9002 catalog 2
     Then catalog item name should be iPod touch
-    And catalog item price should be 22.0
+    And catalog item price should be 21.0
 
