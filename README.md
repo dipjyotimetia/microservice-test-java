@@ -15,3 +15,5 @@ mvn clean install -Dcucumber.options="--tags @order" -Dselenide.browser=chrome -
 mvn clean install -Dbrowser=microservice.browser.ChromeAppleIphone5DriverProvider -Dcucumber.options="--tags @order"
 
 mvn clean install -Dbrowser=microservice.browser.ChromeAppleIphone5RemoteDriverProvider -Dcucumber.options="--tags @order" -Denv=remote
+
+Note: before remote run see https://github.com/SeleniumHQ/docker-selenium (debub part) and must connect selenium debug container to NW where microservice resides e.g. docker network connect resources_default sleepy_minsky.
