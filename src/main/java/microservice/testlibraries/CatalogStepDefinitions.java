@@ -71,7 +71,7 @@ public class CatalogStepDefinitions {
 
 
         //System.out.println("Sleeping 120s due to check if services are up...");
-        //Selenide.sleep(120000);
+        Selenide.sleep(30000);
         catalogItem = MsCatalogRest.getSingleCatalogItemWithId(MsConstants.catalogServiceUrl, MsConstants.catalogURI, "2");
     }
 
