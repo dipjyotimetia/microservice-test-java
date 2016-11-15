@@ -27,7 +27,7 @@ public class AcceptanceTestsStepDefinitions {
     public void orderShouldNotExistByCustomer(String customer) {
         printMethodName();
 
-        msMainPage = Selenide.open(MsConstants.microserviceHost, MsMainPage.class);
+        msMainPage = Selenide.open(MsConstants.catalogServiceUrl, MsMainPage.class);
         msMainPage.navigateToOrderPage()
                 .deleteOrderByCustomer(customer)
                 .navigateBackToMainPage();

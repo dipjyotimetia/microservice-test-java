@@ -5,6 +5,7 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import microservice.common.MsConstants;
 import microservice.helper.SSHService;
 import microservice.msrest.MsCatalogRest;
 
@@ -64,10 +65,10 @@ public class CatalogStepDefinitions {
 //        //ssh.downloadFiles("passwordAuth", localFolder, remotefiles);
     }
 
-    @When("i get the catalog item from rest (.*) (.*) (.*)")
-    public void iGetTheCatalogItemFromRest(String service, String uri, String id) {
+    @When("i get the catalog item from rest")
+    public void iGetTheCatalogItemFromRest() {
 
-        catalogItem = MsCatalogRest.getSingleCatalogItemWithId(service, uri, id);
+        catalogItem = MsCatalogRest.getSingleCatalogItemWithId(MsConstants.catalogServiceUrl, MsConstants.catalogURI, "2");
     }
 
     @Then("catalog item name should be (.*)")
