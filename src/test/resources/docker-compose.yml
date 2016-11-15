@@ -7,25 +7,25 @@ services:
     expose:
       - "8761"
   customer:
-    image: customer:$GO_DEPENDENCY_LABEL_CUSTOMER_MASTER
+    image: eekamak/customer:latest
     expose:
       - "8080"
     links:
      - eureka
   catalog:
-    image: catalog:$GO_DEPENDENCY_LABEL_CATALOG_MASTER
+    image: eekamak/catalog:latest
     expose:
       - "8080"
     links:
      - eureka
   order:
-    image: order:$GO_DEPENDENCY_LABEL_ORDER_MASTER
+    image: eekamak/order:latest
     expose:
       - "8080"
     links:
      - eureka
   zuul:
-    image: zuul:$GO_DEPENDENCY_LABEL_ZUUL_MASTER
+    image: eekamak/zuul:latest
     links:
      - eureka
     expose:
