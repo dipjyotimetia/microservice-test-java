@@ -1,5 +1,6 @@
 package microservice.testlibraries;
 
+import com.codeborne.selenide.Selenide;
 import com.fasterxml.jackson.databind.JsonNode;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -68,6 +69,9 @@ public class CatalogStepDefinitions {
     @When("i get the catalog item from rest")
     public void iGetTheCatalogItemFromRest() {
 
+
+        System.out.println("Sleeping 120s due to check if services are up...");
+        Selenide.sleep(120000);
         catalogItem = MsCatalogRest.getSingleCatalogItemWithId(MsConstants.catalogServiceUrl, MsConstants.catalogURI, "2");
     }
 
