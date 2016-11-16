@@ -1,10 +1,13 @@
 package microservice.msrest;
 
 
+import com.codeborne.selenide.Selenide;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import gherkin.lexer.Th;
 import microservice.helper.RESTService;
+import org.joda.time.DateTime;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -63,6 +66,27 @@ public class MsCatalogRest {
             throw new RuntimeException("Failed to get catalog item with id " + service +"/"+uri+"/"+id, e);
         }
     }
+
+    public static JsonNode waitForGetSingleCatalogItemWithId(Integer timeout, Integer retryInterval, final String service, final String uri, final String id)  {
+        printMethodName();
+
+        DateTime timeoutTime = new DateTime().plusSeconds(timeout);
+        while (timeoutTime.isAfterNow()) {
+
+            try {
+
+                getSingleCatalogItemWithId (service,uri,id);
+
+            } catch (Throwable e) {
+                System.out.println("Got exception: " + e);
+                System.out.println("Retry sleeping " + (retryInterval) + " seconds");
+                Selenide.sleep(retryInterval * 1000);
+
+            }
+        }
+        throw new RuntimeException("Getting single catalog item with id failed after " + timeout + " seconds.");
+    }
+
 
 
     public static ArrayList getCatalogItemIdsThroughRestApi(final String service, final String uri) {
@@ -168,7 +192,7 @@ public class MsCatalogRest {
         printMethodName();
         try {
 
-            JsonNode jsonNode = MsCatalogRest.getSingleCatalogItemWithId(service, uri, catalogId);
+            JsonNode jsonNode = MsCatalogRest.waitForGetSingleCatalogItemWithId(60, 3, service, uri, catalogId);
             String catalogName = jsonNode.get("name").asText();
             System.out.println(catalogName);
 
