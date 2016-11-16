@@ -27,6 +27,8 @@ public class AcceptanceTestsStepDefinitions {
     public void orderShouldNotExistByCustomer(String customer) {
         printMethodName();
 
+        System.out.println("Sleeping before opening browser...");
+        Selenide.sleep(60000);
         msMainPage = Selenide.open(MsConstants.catalogServiceUrl, MsMainPage.class);
         msMainPage.navigateToOrderPage()
                 .deleteOrderByCustomer(customer)
