@@ -192,7 +192,7 @@ public class MsCatalogRest {
         printMethodName();
         try {
 
-            JsonNode jsonNode = MsCatalogRest.waitForGetSingleCatalogItemWithId(60, 3, service, uri, catalogId);
+            JsonNode jsonNode = MsCatalogRest.getSingleCatalogItemWithId(service, uri, catalogId);
             String catalogName = jsonNode.get("name").asText();
             System.out.println(catalogName);
 

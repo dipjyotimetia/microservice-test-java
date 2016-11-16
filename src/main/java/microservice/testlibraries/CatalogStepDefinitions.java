@@ -72,7 +72,8 @@ public class CatalogStepDefinitions {
 
         //System.out.println("Sleeping due to check if services are up...");
         //Selenide.sleep(30000);
-        catalogItem = MsCatalogRest.getSingleCatalogItemWithId(MsConstants.catalogServiceUrl, MsConstants.catalogURI, "2");
+        //catalogItem = MsCatalogRest.getSingleCatalogItemWithId(MsConstants.catalogServiceUrl, MsConstants.catalogURI, "2");
+        catalogItem = MsCatalogRest.waitForGetSingleCatalogItemWithId(60,5,MsConstants.catalogServiceUrl, MsConstants.catalogURI, "2");
     }
 
     @Then("catalog item name should be (.*)")
