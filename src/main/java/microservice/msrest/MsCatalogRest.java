@@ -74,8 +74,7 @@ public class MsCatalogRest {
         while (timeoutTime.isAfterNow()) {
 
             try {
-
-                getSingleCatalogItemWithId (service,uri,id);
+                return getSingleCatalogItemWithId (service,uri,id);
 
             } catch (Throwable e) {
                 System.out.println("Got exception: " + e);
