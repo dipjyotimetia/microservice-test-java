@@ -11,11 +11,11 @@ acceptance_testing:
       owasp_zap: false
       selenium_grid: true
       service_virtualization: false
-      robot_framework: true
-      cucumber: false
+      robot_framework: false
+      cucumber: true
     commands:
       - test_commands:
-        - mvn clean install -Dcucumber.options="--tags @catalog" -Dselenide.browser=chrome -Denv=remote
+        - mvn clean install -Dcucumber.options="--tags @all" -Dselenide.browser=chrome -Denv=remote;mvn site
 #      - test_commands:
 #        - mvn clean -Probot -Drobot.http_proxy_port=8000 -Drobot.http_proxy_host=zap -Drobot.browser=firefox -Drobot.remote_url=http://hub:4444/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 clean install
 
