@@ -28,7 +28,7 @@ public class AcceptanceTestsStepDefinitions {
         printMethodName();
 
         System.out.println("Sleeping before opening browser...");
-        Selenide.sleep(360000);
+        Selenide.sleep(900000);
         msMainPage = Selenide.open(MsConstants.microserviceHost, MsMainPage.class);
         msMainPage.navigateToOrderPage()
                 .deleteOrderByCustomer(customer)
