@@ -23,7 +23,7 @@ acceptance_testing:
   selenium_grid_browsers:
     - name: chrome
       amount: 1
-      version: "latest"
+      version: "3.0.1-aluminum"
     - name: firefox
       amount: 1
-      version: "latest"
+      version: "3.0.1-aluminum"
