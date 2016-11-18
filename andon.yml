@@ -15,15 +15,16 @@ acceptance_testing:
       cucumber: true
     commands:
       - test_commands:
-        - mvn clean install -Dcucumber.options="--tags @all" -Dselenide.browser=chrome -Denv=remote -Dremote=http://hub:4444/wd/hub
-        - mvn site
+        - cmd: mvn clean install -Dcucumber.options="--tags @all" -Dselenide.browser=chrome -Denv=remote -Dremote=http://hub:4444/wd/hub
+        - cmd: mvn site
+          run_if_conditions: any
 #      - test_commands:
-#        - mvn clean -Probot -Drobot.http_proxy_port=8000 -Drobot.http_proxy_host=zap -Drobot.browser=firefox -Drobot.remote_url=http://hub:4444/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 clean install
+#        - cmd: mvn clean -Probot -Drobot.http_proxy_port=8000 -Drobot.http_proxy_host=zap -Drobot.browser=firefox -Drobot.remote_url=http://hub:4444/wd/hub -Drobot.order.url=http://zuul:8080/order/ -Drobot.main.url=http://zuul:8080 -Drobot.catalog_rest_url=http://catalog:8080 -Drobot.customer_rest_url=http://customer:8080 clean install
 
-  selenium_grid_browsers:
-    - name: chrome
-      amount: 1
-      version: "latest"
-    - name: firefox
-      amount: 1
-      version: "latest"
+    selenium_grid_browsers:
+      - name: chrome
+        amount: 1
+        version: "latest"
+      - name: firefox
+        amount: 1
+        version: "latest"
