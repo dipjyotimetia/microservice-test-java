@@ -1,3 +1,6 @@
+general:
+  whitelist: true
+  
 pre_stage:
   go_cd_agent_props:
     - java:8
