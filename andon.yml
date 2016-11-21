@@ -3,7 +3,7 @@ pre_stage:
     - java:8
     - maven
   custom_cmd:
-    - mvn --version
+    -true
 
 acceptance_testing:
   compose_file_path: /src/test/resources
@@ -40,4 +40,4 @@ post_stage:
     - java:8
     - maven
   custom_cmd:
-    - mvn --version
+    - true
