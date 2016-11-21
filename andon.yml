@@ -1,3 +1,10 @@
+pre-stage:
+  go_cd_agent_props:
+    - java:8
+    - maven
+  custom_cmd:
+    - mvn --version
+
 acceptance_testing:
   compose_file_path: /src/test/resources
   compose_file_name: docker-compose.yml
@@ -27,3 +34,10 @@ acceptance_testing:
     - name: firefox
       amount: 1
       version: "latest"
+
+post_stage:
+  go_cd_agent_props:
+    - java:8
+    - maven
+  custom_cmd:
+    - mvn --version
