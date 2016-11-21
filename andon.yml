@@ -1,9 +1,9 @@
-pre-stage:
-    go_cd_agent_props:
-      - java:8
-      - maven
-    custom_cmd:
-      - mvn --version
+pre_stage:
+  go_cd_agent_props:
+    - java:8
+    - maven
+  custom_cmd:
+    - mvn --version
 
 acceptance_testing:
   compose_file_path: /src/test/resources
@@ -36,8 +36,8 @@ acceptance_testing:
       version: "latest"
 
 post_stage:
-    go_cd_agent_props:
-      - java:8
-      - maven
-    custom_cmd:
-      - mvn --version
+  go_cd_agent_props:
+    - java:8
+    - maven
+  custom_cmd:
+    - mvn --version
