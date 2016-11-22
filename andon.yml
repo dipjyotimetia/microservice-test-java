@@ -1,6 +1,6 @@
 general:
   whitelist: true
-  pipeline_base_name: Minun Microservice Acceptance
+  #pipeline_base_name: Minun Microservice Acceptance
   dependency:
    - Pipeline1 [defaultStage]
   
