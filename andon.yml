@@ -1,8 +1,8 @@
 general:
   whitelist: true
   pipeline_base_name: Minun Microservice Acceptance
-  dependency:
-   - Catalog [Compile]
+#  dependency:
+#   - Catalog [Compile]
   
 pre_stage:
   go_cd_agent_props:
