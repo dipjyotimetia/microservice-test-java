@@ -28,9 +28,8 @@ acceptance_testing:
       cucumber: true
     commands:
       - test_commands:
-        #- cmd: mvn clean install -Dcucumber.options="--tags @all" -Dselenide.browser=chrome -Denv=remote -Dremote=http://hub:4444/wd/hub
-        #- cmd: mvn site
-        #- cmd: /var/lib/go-agent/pipelines/Minun_Microservice_Acceptance_master/src/main/resources/test.sh
+        - cmd: mvn clean install -Dcucumber.options="--tags @all" -Dselenide.browser=chrome -Denv=remote -Dremote=http://hub:4444/wd/hub
+        - cmd: mvn site
         - cmd: src/main/resources/test.sh
           run_if_conditions: any
 #      - test_commands:
