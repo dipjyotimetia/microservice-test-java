@@ -48,4 +48,5 @@ post_stage:
     - java:8
     - maven
   custom_cmd:
-    - /sbin/ifconfig
+    - cmd: ssh -o StrictHostKeyChecking=no -i /etc/andon/ssh_keys/hostaccess jaheikki@10.4.0.4 pkill -9 -f /home/jaheikki/jars/microservice-demo-eureka-server-0.0.1-SNAPSHOT.jar
+    - cmd: ssh -o StrictHostKeyChecking=no -i /etc/andon/ssh_keys/hostaccess jaheikki@10.4.0.4 pkill -9 -f /home/jaheikki/jars/microservice-demo-catalog-0.0.1-SNAPSHOT.jar
