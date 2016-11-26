@@ -1,9 +1,9 @@
 general:
   whitelist: true
   pipeline_base_name: Minun Microservice Acceptance
-#  dependency:
-#   - Catalog [Compile]
-  
+  dependency:
+   - Catalog [Compile]
+Compile
 pre_stage:
   go_cd_agent_props:
     - java:8
@@ -28,7 +28,8 @@ acceptance_testing:
       cucumber: true
     commands:
       - test_commands:
-        - cmd: mvn clean install -Dcucumber.options="--tags @all" -Dselenide.browser=chrome -Denv=remote -Dremote=http://hub:4444/wd/hub
+#        - cmd: mvn clean install -Dcucumber.options="--tags @all" -Dselenide.browser=chrome -Denv=remote -Dremote=http://hub:4444/wd/hub
+        - cmd: mvn clean install -Dcucumber.options="--tags @catalog" -Dselenide.browser=chrome -Denv=localnodocker
         - cmd: mvn site
         - cmd: src/main/resources/test.sh
           run_if_conditions: any
