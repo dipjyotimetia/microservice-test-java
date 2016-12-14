@@ -9,3 +9,9 @@ Feature: Microservice acceptance tests
      And customer Teemu Selanne is added
     When I order product Torspo as customer Teemu Selanne
     Then I can verify my order of Torspo with price 119.0 by customer Teemu Selanne
+
+#  Scenario: get catalog item
+#    Given catalog item exists at the database
+#    When i get the catalog item from rest
+#    Then catalog item name should be iPod touch
+#    And catalog item price should be 21.0
