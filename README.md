@@ -1,5 +1,5 @@
 Usage:
--------
+---------
 mvn clean install -Dcucumber.options="--tags @catalog";mvn site
 
 mvn clean install -Dcucumber.options="--tags @order";mvn site
